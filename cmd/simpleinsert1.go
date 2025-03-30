@@ -31,6 +31,6 @@ var simpleinsert1Cmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(simpleinsert1Cmd)
-	simpleinsert1Cmd.PersistentFlags().StringVarP(&ssql, "ssql", "e", "", "分区查询的SQL")
-	simpleinsert1Cmd.PersistentFlags().StringVarP(&isql, "isql", "f", "", "写入数据的SQL")
+	simpleinsert1Cmd.PersistentFlags().StringVarP(&ssql, "ssql", "f", "", "分区查询的SQL")
+	simpleinsert1Cmd.PersistentFlags().StringVarP(&isql, "isql", "e", "", "写入数据的SQL")
 }

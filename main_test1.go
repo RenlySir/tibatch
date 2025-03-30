@@ -22,7 +22,3 @@ func insertPeriodData(isql string) {
 	//_, err := db.Exec(query, period)
 	//utils.HandleError(err, "执行插入失败:")
 }
-
-func main() {
-	insert()
-}
