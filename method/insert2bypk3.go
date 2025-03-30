@@ -28,7 +28,8 @@ func Insert2ByPK23(db *sql.DB, databaseName string, tableName string, targetData
 	// 步骤1: 获取分页元数据
 	pages := getPageMetadata23(db, primaryKeyColumns, pageSize, databaseName, tableName, whereCondition)
 	// 步骤2: 并发处理分页
-	processPages23(db, pages, threadCount, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns, selectColumns, sourceDatabaseName, sourceTableName)
+	processPages23(db, pages, threadCount, databaseName, tableName, targetDatabaseName, targetTableName,
+		primaryKeyColumns, selectColumns, sourceDatabaseName, sourceTableName)
 }
 
 // 获取分页元数据
@@ -110,7 +111,8 @@ func processPages23(db *sql.DB, pages []PageMeta23, threadCount int, databaseNam
 		go func() {
 			defer wg.Done()
 			for page := range ch {
-				insertPage23(db, page, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns, selectColumns, sourceDatabaseName, sourceTableName)
+				insertPage23(db, page, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns,
+					selectColumns, sourceDatabaseName, sourceTableName)
 			}
 		}()
 	}
