@@ -5,8 +5,9 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/spf13/tibatch/method"
+	"github.com/spf13/tibatch/utils"
 )
 
 var (
@@ -20,9 +21,11 @@ var simpleinsert1Cmd = &cobra.Command{
 	Short: "give 2 sql",
 	Long:  `page sql and insert into sql `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("simpleupsert1 called")
-		//1、传入分页的SQL
-		//2、传入写入表的SQL
+		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/", dbUser, dbPassword, dbHost, dbPort)
+		db, err := utils.GetDBConnectionPool(dsn)
+		utils.HandleError(err, "Error connecting to TiDB")
+		defer db.Close()
+		method.BatchProcess(db, ssql, isql, threadCount)
 	},
 }
 

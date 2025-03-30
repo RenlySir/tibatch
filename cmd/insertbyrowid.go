@@ -24,7 +24,8 @@ var insertbyrowidCmd = &cobra.Command{
 		defer db.Close()
 
 		// 调用方法插入数据
-		method.InsertByRowID(db, ssql, isql, threadCount)
+		method.InsertByRowID(db, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns,
+			selectColumns, pageSize, threadCount, whereCondition)
 
 	},
 }

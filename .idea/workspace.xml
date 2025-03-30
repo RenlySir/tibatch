@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1dcd911f-de4d-40ce-ae66-73113aa0dbd7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/method/simpleupsert.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main_test1.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/method/insert2bypk3.go" beforeDir="false" afterPath="$PROJECT_DIR$/method/insert2bypk3.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/connect.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/connect.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/insertbyrowid.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/insertbyrowid.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/simpleinsert1.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/simpleinsert1.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/method/insertbyrowid.go" beforeDir="false" afterPath="$PROJECT_DIR$/method/insertbyrowid.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/method/simpleinsert.go" beforeDir="false" afterPath="$PROJECT_DIR$/method/simpleinsert.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +55,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build main_test1.go.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
@@ -70,6 +75,27 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/method" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmd" />
+      <recent name="$PROJECT_DIR$/utils" />
+      <recent name="$PROJECT_DIR$/method" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build main_test1.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="tibatch" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <package value="github.com/spf13/tibatch" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main_test1.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main_test1.go" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

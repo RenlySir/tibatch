@@ -42,9 +42,11 @@ func InsertByRowID(db *sql.DB, databaseName string, tableName string, targetdata
 				end_key := page[2].(int64)
 				page_size := page[3].(int)
 
-				fmt.Printf("Page Num: %d, Start Key: %d, End Key: %d, Page Size: %d\n", page_num, start_key, end_key, page_size)
+				fmt.Printf("Page Num: %d, Start Key: %d, End Key: %d, Page Size: %d\n",
+					page_num, start_key, end_key, page_size)
 
-				InsertDataByPage(db, databaseName, tableName, targetdatabaseName, targettableName, primaryKeyColumns, selectColumns, start_key, end_key)
+				InsertDataByPage(db, databaseName, tableName, targetdatabaseName, targettableName, primaryKeyColumns,
+					selectColumns, start_key, end_key)
 			}
 		}()
 	}
@@ -64,14 +66,16 @@ func InsertByRowID(db *sql.DB, databaseName string, tableName string, targetdata
 
 }
 
-func InsertDataByPage(db *sql.DB, databaseName string, tableName string, targetDatabaseName string, targetTableName string, primaryKeyColumns string, selectColumns string, start_key int64, end_key int64) {
+func InsertDataByPage(db *sql.DB, databaseName string, tableName string, targetDatabaseName string, targetTableName string,
+	primaryKeyColumns string, selectColumns string, start_key int64, end_key int64) {
 	// 构造 INSERT ON DUPLICATE KEY UPDATE 查询
 	insertQuery := fmt.Sprintf(`
         INSERT INTO %s.%s (%s)
         SELECT %s FROM %s.%s t
         WHERE t._tidb_rowid BETWEEN ? AND ?
         ON DUPLICATE KEY UPDATE %s;
-    `, targetDatabaseName, targetTableName, selectColumns, selectColumns, databaseName, tableName, generateUpdateClause(primaryKeyColumns))
+    `, targetDatabaseName, targetTableName, selectColumns, selectColumns, databaseName, tableName,
+		generateUpdateClause(primaryKeyColumns))
 
 	_, err := db.Exec(insertQuery, start_key, end_key)
 	utils.HandleError(err, "Error inserting data")

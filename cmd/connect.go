@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/spf13/cobra"
 	"github.com/spf13/tibatch/utils"
