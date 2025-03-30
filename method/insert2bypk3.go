@@ -122,7 +122,8 @@ func processPages23(db *sql.DB, pages []PageMeta23, threadCount int, databaseNam
 	wg.Wait()
 }
 
-func buildoOncolumn(primaryKeyColumns string, sourceDatabaseName string, sourceTableName string) string {
+func buildoOncolumn(primaryKeyColumns string, sourceDatabaseName string, sourceTableName string,
+	databaseName string, tableName string) string {
 	pks := strings.Split(primaryKeyColumns, ",")
 	for i := range pks {
 		// 移除前导零并转换为数字
@@ -132,15 +133,22 @@ func buildoOncolumn(primaryKeyColumns string, sourceDatabaseName string, sourceT
 		}
 	}
 	onCondition := fmt.Sprintf(
-		"left join %s.%s on t1.%s=t2.%s and t1.%s=t2.%s and t1.%s=t2.%s",
-		sourceDatabaseName, sourceTableName, pks[0], pks[0], pks[1], pks[1], pks[2], pks[2],
+		"left join %s.%s on %s.%s.%s=%s.%s.%s and %s.%s.%s=%s.%s.%s and %s.%s.%s=%s.%s.%s",
+		sourceDatabaseName, sourceTableName,
+		sourceDatabaseName, sourceTableName, pks[0],
+		databaseName, tableName, pks[0],
+		sourceDatabaseName, sourceTableName, pks[1],
+		databaseName, tableName, pks[1],
+		sourceDatabaseName, sourceTableName, pks[2],
+		databaseName, tableName, pks[2],
 	)
 	fmt.Printf("onCondition is %s:", onCondition)
 	return onCondition
 }
 
 // 构建WHERE条件
-func buildWhereClause23(page PageMeta23, primaryKeyColumns string) string {
+func buildWhereClause23(page PageMeta23, primaryKeyColumns string,
+	databaseName string, tableName string, sourceDatabaseName string, sourceTableName string) string {
 	// 解析起始结束值
 	startVals := parseKey(page.StartKey) // [w, d, c]
 	endVals := parseKey(page.EndKey)     // [w, d, c]
@@ -158,28 +166,68 @@ func buildWhereClause23(page PageMeta23, primaryKeyColumns string) string {
 
 	// 情况1: w_id在中间范围
 	conditions = append(conditions, fmt.Sprintf(
-		"(pks[0] > %s AND pks[0] < %s)",
-		startVals[0], endVals[0],
+		"( %s.%s.%s > %s AND %s.%s.%s < %s)",
+		databaseName, tableName, pks[0], startVals[0],
+		databaseName, tableName, pks[0], endVals[0],
 	))
 
 	// 情况2: w_id等于起始值
 	conditions = append(conditions, fmt.Sprintf(
-		"(pks[0] = %s AND pks[1] > %s)",
-		startVals[0], startVals[1],
+		"(%s.%s.%s = %s AND %s.%s.%s > %s)",
+		databaseName, tableName, pks[0], startVals[0],
+		databaseName, tableName, pks[1], startVals[1],
 	))
 	conditions = append(conditions, fmt.Sprintf(
-		"(pks[0] = %s AND pks[1] = %s AND pks[2] >= %s)",
-		startVals[0], startVals[1], startVals[2],
+		"( %s.%s.%s= %s AND %s.%s.%s = %s AND %s.%s.%s >= %s)",
+		databaseName, tableName, pks[0], startVals[0],
+		databaseName, tableName, pks[1], startVals[1],
+		databaseName, tableName, pks[2], startVals[2],
 	))
 
 	// 情况3: w_id等于结束值
 	conditions = append(conditions, fmt.Sprintf(
-		"(pks[0] = %s AND pks[1] < %s)",
-		endVals[0], endVals[1],
+		"( %s.%s.%s= %s AND %s.%s.%s < %s)",
+		databaseName, tableName, pks[0], endVals[0],
+		databaseName, tableName, pks[1], endVals[1],
 	))
 	conditions = append(conditions, fmt.Sprintf(
-		"(pks[0] = %s AND pks[1] = %s AND pks[2] <= %s)",
-		endVals[0], endVals[1], endVals[2],
+		"( %s.%s.%s= %s AND %s.%s.%s = %s AND %s.%s.%s <= %s)",
+		databaseName, tableName, pks[0], endVals[0],
+		databaseName, tableName, pks[1], endVals[1],
+		databaseName, tableName, pks[2], endVals[2],
+	))
+
+	// 情况1: w_id在中间范围
+	conditions = append(conditions, fmt.Sprintf(
+		"( %s.%s.%s > %s AND %s.%s.%s < %s)",
+		sourceDatabaseName, sourceTableName, pks[0], startVals[0],
+		sourceDatabaseName, sourceTableName, pks[0], endVals[0],
+	))
+
+	// 情况2: w_id等于起始值
+	conditions = append(conditions, fmt.Sprintf(
+		"(%s.%s.%s = %s AND %s.%s.%s > %s)",
+		sourceDatabaseName, sourceTableName, pks[0], startVals[0],
+		sourceDatabaseName, sourceTableName, pks[1], startVals[1],
+	))
+	conditions = append(conditions, fmt.Sprintf(
+		"( %s.%s.%s= %s AND %s.%s.%s = %s AND %s.%s.%s >= %s)",
+		sourceDatabaseName, sourceTableName, pks[0], startVals[0],
+		sourceDatabaseName, sourceTableName, pks[1], startVals[1],
+		sourceDatabaseName, sourceTableName, pks[2], startVals[2],
+	))
+
+	// 情况3: w_id等于结束值
+	conditions = append(conditions, fmt.Sprintf(
+		"( %s.%s.%s= %s AND %s.%s.%s < %s)",
+		sourceDatabaseName, sourceTableName, pks[0], endVals[0],
+		sourceDatabaseName, sourceTableName, pks[1], endVals[1],
+	))
+	conditions = append(conditions, fmt.Sprintf(
+		"( %s.%s.%s= %s AND %s.%s.%s = %s AND %s.%s.%s <= %s)",
+		sourceDatabaseName, sourceTableName, pks[0], endVals[0],
+		sourceDatabaseName, sourceTableName, pks[1], endVals[1],
+		sourceDatabaseName, sourceTableName, pks[2], endVals[2],
 	))
 
 	return "(" + strings.Join(conditions, " OR ") + ")"
@@ -187,17 +235,17 @@ func buildWhereClause23(page PageMeta23, primaryKeyColumns string) string {
 
 func insertPage23(db *sql.DB, page PageMeta23, databaseName string, tableName string, targetDatabaseName string,
 	targetTableName string, primaryKeyColumns string, selectColumns string, sourceDatabaseName string, sourceTableName string) {
-	onClause := buildoOncolumn(primaryKeyColumns, sourceDatabaseName, sourceTableName)
-	whereClause := buildWhereClause23(page, primaryKeyColumns)
+	onClause := buildoOncolumn(primaryKeyColumns, sourceDatabaseName, sourceTableName, databaseName, tableName)
+	whereClause := buildWhereClause23(page, primaryKeyColumns, databaseName, tableName, sourceDatabaseName, sourceTableName)
 	query := fmt.Sprintf(`
 		INSERT INTO %s.%s 
 		SELECT %s FROM %s.%s %s 
 		WHERE %s 
 		ON DUPLICATE KEY UPDATE 
-			%s`, targetDatabaseName, targetTableName, selectColumns, onClause, databaseName, tableName,
-		whereClause, primaryKeyColumns, generateUpdateClause(primaryKeyColumns))
+			%s`, targetDatabaseName, targetTableName, selectColumns, databaseName, tableName, onClause,
+		whereClause, generateUpdateClause(primaryKeyColumns))
 
-	fmt.Printf("拼接的SQL：", query)
+	fmt.Printf("拼接的SQL：%s", query)
 	//_, err := db.Exec(query)
 	//if err != nil {
 	//	log.Printf("插入分页%d失败: %v", page.PageNum, err)

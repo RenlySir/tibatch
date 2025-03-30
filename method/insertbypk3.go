@@ -23,7 +23,8 @@ type PageMeta3 struct {
 }
 
 // InsertByPK 根据分页的 start_key 和 end_key 插入数据到目标表
-func InsertByPK3(db *sql.DB, databaseName string, tableName string, targetDatabaseName string, targetTableName string, primaryKeyColumns string, selectColumns string, pageSize int, threadCount int, whereCondition string) {
+func InsertByPK3(db *sql.DB, databaseName string, tableName string, targetDatabaseName string, targetTableName string,
+	primaryKeyColumns string, selectColumns string, pageSize int, threadCount int, whereCondition string) {
 	// 步骤1: 获取分页元数据
 	pages := getPageMetadata3(db, primaryKeyColumns, pageSize, databaseName, tableName, whereCondition)
 	// 步骤2: 并发处理分页
@@ -107,7 +108,8 @@ func processPages3(db *sql.DB, pages []PageMeta3, threadCount int, databaseName 
 		go func() {
 			defer wg.Done()
 			for page := range ch {
-				insertPage3(db, page, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns, selectColumns)
+				insertPage3(db, page, databaseName, tableName, targetDatabaseName, targetTableName,
+					primaryKeyColumns, selectColumns)
 			}
 		}()
 	}

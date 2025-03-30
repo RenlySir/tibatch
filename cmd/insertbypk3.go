@@ -22,7 +22,8 @@ var insertbypk3Cmd = &cobra.Command{
 		utils.HandleError(err, "Error connecting to MySQL")
 		defer db.Close()
 		// 调用方法插入数据
-		method.InsertByPK3(db, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns, selectColumns, pageNumber, threadCount, whereCondition)
+		method.InsertByPK3(db, databaseName, tableName, targetDatabaseName, targetTableName,
+			primaryKeyColumns, selectColumns, pageNumber, threadCount, whereCondition)
 	},
 }
 

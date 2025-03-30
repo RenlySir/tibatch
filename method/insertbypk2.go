@@ -21,11 +21,13 @@ type PageMeta2 struct {
 }
 
 // InsertByPK 根据分页的 start_key 和 end_key 插入数据到目标表
-func InsertByPK2(db *sql.DB, databaseName string, tableName string, targetDatabaseName string, targetTableName string, primaryKeyColumns string, selectColumns string, pageSize int, threadCount int, whereCondition string) {
+func InsertByPK2(db *sql.DB, databaseName string, tableName string, targetDatabaseName string, targetTableName string,
+	primaryKeyColumns string, selectColumns string, pageSize int, threadCount int, whereCondition string) {
 	// 步骤1: 获取分页元数据
 	pages := getPageMetadata2(db, primaryKeyColumns, pageSize, databaseName, tableName, whereCondition)
 	// 步骤2: 并发处理分页
-	processPages2(db, pages, threadCount, databaseName, tableName, targetDatabaseName, targetTableName, primaryKeyColumns, selectColumns)
+	processPages2(db, pages, threadCount, databaseName, tableName, targetDatabaseName, targetTableName,
+		primaryKeyColumns, selectColumns)
 }
 
 // 获取分页元数据

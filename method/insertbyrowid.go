@@ -7,7 +7,8 @@ import (
 	"sync"
 )
 
-func InsertByRowID(db *sql.DB, databaseName string, tableName string, targetdatabaseName string, targettableName string, primaryKeyColumns string, selectColumns string, pageSize int, threadCount int, whereCondition string) {
+func InsertByRowID(db *sql.DB, databaseName string, tableName string, targetdatabaseName string, targettableName string,
+	primaryKeyColumns string, selectColumns string, pageSize int, threadCount int, whereCondition string) {
 
 	query := fmt.Sprintf(`
         SELECT

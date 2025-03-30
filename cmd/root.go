@@ -49,8 +49,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&primaryKeyColumns, "primarykeys", "z", "", "Primary key columns (comma-separated)")
 	rootCmd.PersistentFlags().StringVarP(&selectColumns, "selectcolumns", "x", "*", "Columns to select (comma-separated)")
 	rootCmd.PersistentFlags().StringVarP(&whereCondition, "whereCondition", "w", "", "give table where condition if needed ")
-	rootCmd.PersistentFlags().IntVarP(&pageSize, "pagesize", "s", 10, "Page size")
+	rootCmd.PersistentFlags().IntVarP(&pageSize, "pagesize", "s", 5000, "Page size")
 	rootCmd.PersistentFlags().IntVarP(&pageNumber, "pagenumber", "n", 1, "Page number")
-	rootCmd.PersistentFlags().IntVarP(&threadCount, "threads", "c", 1, "Number of threads")
+	rootCmd.PersistentFlags().IntVarP(&threadCount, "threads", "c", 8, "Number of threads")
 
 }
