@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/spf13/tibatch/method"
 	"github.com/spf13/tibatch/utils"
@@ -23,12 +22,7 @@ var simpleinsert1Cmd = &cobra.Command{
 		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/", dbUser, dbPassword, dbHost, dbPort)
 		db, err := utils.GetDBConnectionPool(dsn)
 		utils.HandleError(err, "Error connecting to TiDB")
-		defer func(db *sql.DB) {
-			err := db.Close()
-			if err != nil {
-				utils.HandleError(err, "Error closing database connection")
-			}
-		}(db)
+
 		method.BatchProcess(db, ssql, isql, threadCount)
 	},
 }

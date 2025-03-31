@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1dcd911f-de4d-40ce-ae66-73113aa0dbd7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/simpleinsert2.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/method/simpleinsert2.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/simpleinsert1.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/simpleinsert1.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/method/insertbyrowid.go" beforeDir="false" afterPath="$PROJECT_DIR$/method/insertbyrowid.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tidb-cli" beforeDir="false" afterPath="$PROJECT_DIR$/tidb-cli" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,20 +80,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="go build main_test1.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build github.com/spf13/tibatch" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="tibatch" />
       <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
+      <kind value="PACKAGE" />
       <package value="github.com/spf13/tibatch" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/main_test1.go" />
+      <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Build.go build main_test1.go" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

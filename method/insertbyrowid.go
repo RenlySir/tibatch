@@ -70,12 +70,10 @@ func InsertDataByPage(db *sql.DB, databaseName string, tableName string, targetD
 	primaryKeyColumns string, selectColumns string, start_key int64, end_key int64) {
 	// 构造 INSERT ON DUPLICATE KEY UPDATE 查询
 	insertQuery := fmt.Sprintf(`
-        INSERT INTO %s.%s (%s)
+        INSERT INTO %s.%s 
         SELECT %s FROM %s.%s t
-        WHERE t._tidb_rowid BETWEEN ? AND ?
-        ON DUPLICATE KEY UPDATE %s;
-    `, targetDatabaseName, targetTableName, selectColumns, selectColumns, databaseName, tableName,
-		generateUpdateClause(primaryKeyColumns))
+        WHERE t._tidb_rowid BETWEEN ? AND ?;`, targetDatabaseName, targetTableName, selectColumns, selectColumns,
+		databaseName, tableName, generateUpdateClause(primaryKeyColumns))
 
 	_, err := db.Exec(insertQuery, start_key, end_key)
 	utils.HandleError(err, "Error inserting data")
